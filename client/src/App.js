@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src="/ninas_sausage.png" height="200px" className="App-logo" alt="logo" />
+        <img src="/ninas_naked_sausage.png" height="200px" className="App-logo" alt="logo" />
         {/* <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -17,6 +17,7 @@ function App() {
         >
           Learn React
         </a> */}
+        <h2>Currently Under Construction</h2>
       </header>
     </div>
   );
