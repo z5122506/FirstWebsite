@@ -39,17 +39,14 @@ export class TrainForm extends React.Component {
     }
 
     resetEvaluations() {
-        console.log("Resetting");
         this.setState({
             evals: []
         });
     }
 
     render() {
-        console.log("Rendering form");
         const results = [];
         if (this.state.evals != null) {
-            // console.log(this.state);
             this.state.evals.forEach((evalObj) => {
                 results.push(<li>{`${evalObj.teir}: ${evalObj.eval}`}</li>);
             });
