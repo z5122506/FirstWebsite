@@ -53,8 +53,6 @@ export class TrainAlgo {
             }
         });
 
-        console.log(this.removeLeadingZero("0001"));
-
         // Computing the brackets
         preBrackets.forEach((evalObj) => {
             const evals = this.computeBracketsRecursive(evalObj);
@@ -79,7 +77,6 @@ export class TrainAlgo {
         for (let l = 0; l < evalArr.length; l += 2) {
             evalArr[l] = this.removeLeadingZero(evalArr[l]);
         }
-        // console.log(evalArr);
         return evalArr;
     }
 
@@ -90,15 +87,6 @@ export class TrainAlgo {
             return number;
         }
     }
-
-    // computeBrackets(evalArr) {
-    //     evalArr.forEach((evalObj) => {
-    //         const evals = this.computeBracketsRecursive(evalObj);
-    //         evals.forEach((evalString) => {
-    //             this.checkEval(evalString, 3);
-    //         });
-    //     })
-    // }
 
     computeBracketsRecursive(evalObj) {
         const evalArr = evalObj.eval;
@@ -137,11 +125,6 @@ export class TrainAlgo {
                     teir
                 });
             }
-            // console.log(this.correct);
-            // this.correctEvals.push({
-            //     eval: `${evalString}=${eval(evalString)}`,
-            //     teir
-            // });
         }
     }
 
