@@ -69,6 +69,8 @@ export class TrainAlgo {
                 this.checkEval(preEvalObj.eval, preEvalObj.teir);
             });
         });
+
+        return (preBrackets.length > 0) ? true : false;
     }
 
     removeSpaces(evalArr) {
@@ -105,26 +107,17 @@ export class TrainAlgo {
     }
 
     computeBracketsRecursive(evalObj) {
-        // console.log(evalObj.eval);
         const evalArr = evalObj.eval;
         if (evalArr.length === 1) {
             return [{
                 eval: evalArr[0],
                 teir: evalObj.teir
             }];
-            // return {
-            //     evals: [evalArr[0]],
-            //     teir: evalObj.teir
-            // };
         } else if (evalArr.length === 3) {
             return [{
                 eval: evalArr[0],
                 teir: evalObj.teir
             }]
-            // return {
-            //     evals: [`${evalArr.join("")}`],
-            //     teir: evalObj.teir
-            // };
         } else {
             let evals = [];
             for (let i = 0; i < evalArr.length - 1; i += 2) {
