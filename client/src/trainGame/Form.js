@@ -36,12 +36,17 @@ export class TrainForm extends React.Component {
         this.setState({
             evals: newEvals
         });
+        console.log(this.state);
     }
 
     resetEvaluations() {
+        let newEvals = this.state.evals;
+        newEvals.length = 0;
         this.setState({
-            evals: []
+            evals: newEvals
         });
+
+        console.log(this.state);
     }
 
     render() {
