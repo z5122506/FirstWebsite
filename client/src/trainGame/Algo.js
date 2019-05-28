@@ -62,6 +62,15 @@ export class TrainAlgo {
             }
         });
 
+
+        preBrackets.forEach((evalObj) => {
+            const evalArr = evalObj.eval;
+            if (eval(evalArr.join("")) === 10) {
+                console.log(evalArr);
+                console.log(evalObj.teir);
+            }
+        });
+
         // Computing the brackets
         preBrackets.forEach((evalObj) => {
             const evals = this.computeBracketsRecursive(evalObj);
@@ -115,7 +124,7 @@ export class TrainAlgo {
             }];
         } else if (evalArr.length === 3) {
             return [{
-                eval: evalArr[0],
+                eval: evalArr.join(""),
                 teir: evalObj.teir
             }]
         } else {
