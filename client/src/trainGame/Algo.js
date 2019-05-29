@@ -70,10 +70,6 @@ export class TrainAlgo {
             });
         });
 
-        this.computeBracketsRecursive({
-            eval: ["54", "*", "2", "*", "1"]
-        })
-
         return (preBrackets.length > 0) ? true : false;
     }
 
