@@ -62,15 +62,6 @@ export class TrainAlgo {
             }
         });
 
-
-        preBrackets.forEach((evalObj) => {
-            const evalArr = evalObj.eval;
-            if (eval(evalArr.join("")) === 10) {
-                console.log(evalArr);
-                console.log(evalObj.teir);
-            }
-        });
-
         // Computing the brackets
         preBrackets.forEach((evalObj) => {
             const evals = this.computeBracketsRecursive(evalObj);
@@ -78,6 +69,10 @@ export class TrainAlgo {
                 this.checkEval(preEvalObj.eval, preEvalObj.teir);
             });
         });
+
+        this.computeBracketsRecursive({
+            eval: ["54", "*", "2", "*", "1"]
+        })
 
         return (preBrackets.length > 0) ? true : false;
     }
@@ -95,11 +90,11 @@ export class TrainAlgo {
         }
 
         // Possible optimising here
-        if (changes > 0) {
-            for (let l = 0; l < evalArr.length; l += 2) {
-                evalArr[l] = this.removeLeadingZero(evalArr[l]);
-            }
-        }
+        // if (changes > 0) {
+        //     for (let l = 0; l < evalArr.length; l += 2) {
+        //         evalArr[l] = this.removeLeadingZero(evalArr[l]);
+        //     }
+        // }
 
         return {
             evalArr: evalArr,
@@ -107,9 +102,38 @@ export class TrainAlgo {
         };
     }
 
-    removeLeadingZero(number) {
+    removeLeadingZeros(numberArr) {
+        console.log(numberArr);
+        for (let i = 0; i < numberArr.length; i += 2) {
+            let number = numberArr[i];
+            let frontBrackets = 0;
+            while (number[0] === "(") {
+                number = number.substring(1);
+                frontBrackets++;
+            }
+            let backBrackets = 0;
+            while (number[number.length-1] === ")") {
+                number = number.substring(0, number.length - 1);
+                backBrackets++;
+            }
+            number = this.removeLeadingZerosRecursive(number);
+            while (frontBrackets > 0) {
+                number = "(" + number;
+                frontBrackets--;
+            }
+            while (backBrackets > 0) {
+                number = number + ")";
+                backBrackets--;
+            }
+            numberArr[i] = number;
+        }
+        console.log(numberArr);
+        return numberArr;
+    }
+
+    removeLeadingZerosRecursive(number) {
         if (number[0] === "0" && number.length > 1) {
-            return this.removeLeadingZero(number.substring(1, number.length));
+            return this.removeLeadingZerosRecursive(number.substring(1, number.length));
         } else {
             return number;
         }
@@ -119,12 +143,12 @@ export class TrainAlgo {
         const evalArr = evalObj.eval;
         if (evalArr.length === 1) {
             return [{
-                eval: evalArr[0],
+                eval: evalArr,
                 teir: evalObj.teir
             }];
         } else if (evalArr.length === 3) {
             return [{
-                eval: evalArr.join(""),
+                eval: evalArr,
                 teir: evalObj.teir
             }]
         } else {
@@ -143,15 +167,25 @@ export class TrainAlgo {
                     evals = evals.concat(secondArr.map((second) => {
                         let teir = (first.teir < second.teir) ? second.teir : first.teir;
                         teir = (teir > this.BRACKET_TEIR) ? teir : this.BRACKET_TEIR;
+                        first.eval[0] = "(" + first.eval[0];
+                        first.eval[first.eval.length-1] = first.eval[first.eval.length-1] + ")";
+                        second.eval[0] = "(" + second.eval[0];
+                        second.eval[second.eval.length-1] = second.eval[second.eval.length-1] + ")";
+
+                        let resultArr = first.eval;
+                        console.log(first.eval);
+                        console.log(second.eval);
+                        resultArr.push(operator);
+                        resultArr = resultArr.concat(second.eval);
                         return {
-                            eval: "(" + first.eval + ")" + operator + "(" + second.eval + ")", 
+                            eval: resultArr, 
                             teir
                         };
                     }));
                 });
             } 
             evals.push({
-                eval: evalArr.join(""),
+                eval: evalArr,
                 teir: evalObj.teir
             });
             return evals;
@@ -159,10 +193,11 @@ export class TrainAlgo {
     }
 
     checkEval(evalString, teir) {
-        if (eval(evalString) === this.result) {
+        const string = this.removeLeadingZeros(evalString).join("");
+        if (eval(string) === this.result) {
             if (this.correct) {
                 this.correct({
-                    eval: evalString,
+                    eval: evalString.join(""),
                     teir
                 });
             }

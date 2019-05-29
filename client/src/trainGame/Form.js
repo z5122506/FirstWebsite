@@ -14,9 +14,6 @@ export class TrainForm extends React.Component {
 
     submitForm(event) {
         event.preventDefault();
-        
-        console.log(this.isANumber("1a"))
-        console.log(this.isANumber("10"))
 
         // Getting form information
         const form = event.target;
