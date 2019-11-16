@@ -163,16 +163,18 @@ export class TrainAlgo {
                     evals = evals.concat(secondArr.map((second) => {
                         let teir = (first.teir < second.teir) ? second.teir : first.teir;
                         teir = (teir > this.BRACKET_TEIR) ? teir : this.BRACKET_TEIR;
-                        first.eval[0] = "(" + first.eval[0];
-                        first.eval[first.eval.length-1] = first.eval[first.eval.length-1] + ")";
-                        second.eval[0] = "(" + second.eval[0];
-                        second.eval[second.eval.length-1] = second.eval[second.eval.length-1] + ")";
 
-                        let resultArr = first.eval;
-                        console.log(first.eval);
-                        console.log(second.eval);
+                        let firstArr = first.eval.slice();
+                        let secondArr = second.eval.slice();
+                        firstArr[0] = "(" + firstArr[0];
+                        firstArr[firstArr.length-1] = firstArr[firstArr.length-1] + ")";
+                        secondArr[0] = "(" + secondArr[0];
+                        secondArr[secondArr.length-1] = secondArr[secondArr.length-1] + ")";
+
+                        let resultArr = [];
+                        resultArr = resultArr.concat(firstArr);
                         resultArr.push(operator);
-                        resultArr = resultArr.concat(second.eval);
+                        resultArr = resultArr.concat(secondArr);
                         return {
                             eval: resultArr, 
                             teir
